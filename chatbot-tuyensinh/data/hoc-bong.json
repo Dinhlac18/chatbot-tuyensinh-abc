@@ -1,0 +1,17 @@
+{
+  "tieu_de": "Chính sách học bổng tuyển sinh",
+  "cac_loai_hoc_bong": [
+    {
+      "ten": "Học bổng Thủ khoa",
+      "quyen_loi": "Miễn 100% học phí 4 năm + Laptop 25.000.000 VNĐ"
+    },
+    {
+      "ten": "Học bổng Tài năng",
+      "quyen_loi": "Miễn 100% học phí năm đầu tiên cho học sinh đạt từ 27 điểm trở lên"
+    },
+    {
+      "ten": "Học bổng Khuyến khích học tập",
+      "quyen_loi": "Giảm 15%, 30% hoặc 50% học phí theo kết quả từng học kỳ"
+    }
+  ]
+}

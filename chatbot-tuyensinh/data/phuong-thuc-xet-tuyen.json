@@ -1,0 +1,25 @@
+{
+  "tieu_de": "Các phương thức xét tuyển Đại học ABC",
+  "phuong_thuc": [
+    {
+      "id": 1,
+      "ten": "Xét tuyển thẳng",
+      "mo_ta": "Theo quy chế tuyển sinh hiện hành của Bộ GD&ĐT."
+    },
+    {
+      "id": 2,
+      "ten": "Xét điểm thi tốt nghiệp THPT",
+      "mo_ta": "Dựa trên kết quả kỳ thi tốt nghiệp THPT năm 2026."
+    },
+    {
+      "id": 3,
+      "ten": "Xét học bạ THPT",
+      "mo_ta": "Xét điểm trung bình 3 học kỳ hoặc cả năm lớp 12 (từ 18.0 điểm trở lên)."
+    },
+    {
+      "id": 4,
+      "ten": "Xét điểm Đánh giá năng lực",
+      "mo_ta": "Sử dụng kết quả kỳ thi ĐGNL của Đại học Quốc gia."
+    }
+  ]
+}

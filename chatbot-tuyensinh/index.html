@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Tuyển Sinh - Đại học ABC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex flex-col justify-between">
+    
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4 shadow-md text-center font-bold text-lg">
+        🤖 Chatbot Hỗ Trợ Tuyển Sinh - Đại học ABC (24/7)
+    </header>
+
+    <!-- Khung hiển thị tin nhắn -->
+    <div id="chat-container" class="flex-1 overflow-y-auto p-4 space-y-4 max-w-2xl w-full mx-auto">
+        <div class="flex justify-start">
+            <div class="bg-white p-3 rounded-lg shadow max-w-md text-gray-800">
+                Xin chào bạn! Mình là trợ lý ảo tuyển sinh của Đại học ABC. Bạn muốn tìm hiểu về <b>ngành học, học phí, học bổng</b> hay <b>phương thức xét tuyển</b>?
+            </div>
+        </div>
+    </div>
+
+    <!-- Ô nhập liệu -->
+    <div class="bg-white p-4 border-t max-w-2xl w-full mx-auto flex gap-2">
+        <input type="text" id="user-input" placeholder="Nhập câu hỏi của bạn (ví dụ: học phí, ngành học...)..." class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" onkeypress="handleKeyPress(event)">
+        <button onclick="sendMessage()" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 font-semibold">Gửi</button>
+    </div>
+
+    <script>
+        let knowledgeBase = "";
+
+        // Tự động tải dữ liệu từ các file trong thư mục data/ khi mở trang
+        async function loadData() {
+            try {
+                const files = ['nganh-hoc.json', 'hoc-phi.json', 'hoc-bong.json', 'phuong-thuc-xet-tuyen.json', 'faq.json'];
+                for (let file of files) {
+                    let res = await fetch(`data/${file}`);
+                    let data = await res.json();
+                    knowledgeBase += JSON.stringify(data) + "\n";
+                }
+                console.log("Đã tải dữ liệu tuyển sinh thành công!");
+            } catch (error) {
+                console.error("Lỗi tải dữ liệu:", error);
+            }
+        }
+        loadData();
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        async function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const chatContainer = document.getElementById('chat-container');
+            const messageText = inputField.value.trim();
+
+            if (messageText === '') return;
+
+            // Hiển thị câu hỏi của người dùng
+            chatContainer.innerHTML += `
+                <div class="flex justify-end">
+                    <div class="bg-blue-600 text-white p-3 rounded-lg shadow max-w-md">${messageText}</div>
+                </div>
+            `;
+            inputField.value = '';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // Xử lý phản hồi dựa trên từ khóa trong dữ liệu đã nạp
+            setTimeout(() => {
+                let reply = "Cảm ơn bạn đã quan tâm đến Đại học ABC. Bạn vui lòng liên hệ tổng đài tuyển sinh 1900-xxxx để được hỗ trợ chi tiết hơn nhé!";
+                const lowerMsg = messageText.toLowerCase();
+
+                if (lowerMsg.includes('ngành') || lowerMsg.includes('khoa') || lowerMsg.includes('đào tạo')) {
+                    reply = "Trường Đại học ABC đào tạo các khối ngành trọng điểm: Công nghệ thông tin (7480201), Quản trị kinh doanh (7340101), Ngôn ngữ Anh (7220201), Tài chính - Ngân hàng và Thiết kế đồ họa.";
+                } else if (lowerMsg.includes('học phí')) {
+                    reply = "Học phí dự kiến tại Đại học ABC dao động từ 14 - 18 triệu VNĐ/học kỳ tùy theo khối ngành (khoảng 350.000 - 450.000 VNĐ/tín chỉ). Cam kết không tăng quá 10% trong suốt khóa học.";
+                } else if (lowerMsg.includes('học bổng')) {
+                    reply = "Trường có các chính sách học bổng hấp dẫn: Học bổng Thủ khoa (miễn 100% học phí + Laptop), Học bổng Tài năng (miễn 100% học phí năm đầu cho thí sinh điểm cao), và học bổng khuyến khích học tập hàng kỳ.";
+                } else if (lowerMsg.includes('xét tuyển') || lowerMsg.includes('hồ sơ') || lowerMsg.includes('điểm')) {
+                    reply = "Các phương thức xét tuyển gồm: Xét tuyển thẳng, Xét điểm thi tốt nghiệp THPT 2026, Xét học bạ THPT (từ 18.0 điểm trở lên) và Xét điểm Đánh giá năng lực.";
+                } else if (lowerMsg.includes('ký túc xá') || lowerMsg.includes('ktx')) {
+                    reply = "Trường có ký túc xá ngay trong khuôn viên, sức chứa hơn 2.000 sinh viên, trang bị đầy đủ điều hòa và internet hoạt động 24/7.";
+                }
+
+                chatContainer.innerHTML += `
+                    <div class="flex justify-start">
+                        <div class="bg-white p-3 rounded-lg shadow max-w-md text-gray-800">${reply}</div>
+                    </div>
+                `;
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
